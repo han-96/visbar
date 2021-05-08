@@ -4,7 +4,7 @@
   "description": "\"# visbar project on web Course in MindX\"",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
