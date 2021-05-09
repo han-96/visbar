@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { login } from '../redux/actions/authAction';
+import { useDispatch } from 'react-redux';
+
 
 const Login = () => {
     const initialState = { email: '', password: '' };
     const [userData, setUserData] = useState(initialState);
     const { email, password } = userData;
+    
+    const dispatch = useDispatch();
 
     const handleChangeInput = e => {
         const {name, value} = e.target;
         setUserData({...userData, [name]:value})
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        dispatch(login(userData));
+    }
+
     return (
         <div className="auth_page">
-            <form>
-                <h3 className="text-uppercase">Đăng nhập</h3>
+            <form onSubmit={handleSubmit}>
+                <h3 className="text-uppercase text-center mb-4" >Đăng nhập</h3>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" onChange={handleChangeInput} value={email}/>
@@ -25,7 +35,11 @@ const Login = () => {
                     <input type="password" className="form-control" id="exampleInputPassword1" name="password" onChange={handleChangeInput} value={password}/>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>   
+                <button type="submit" className="btn btn-dark w-100" disabled={email && password ? false : true}>Đăng nhập</button>
+
+                <p className="my-2">
+                    Bạn chưa có tài khoản? Bấm vào <Link to="/register" style={{color: "crimson"}}>đây</Link> để đăng ký.
+                </p>   
             </form>
         </div>
     )
